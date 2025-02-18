@@ -29,5 +29,3 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         print("Server stopped.")
-    finally:
-        GPIO.cleanup() # Clean up GPIO on exit (important!)
