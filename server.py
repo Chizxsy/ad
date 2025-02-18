@@ -1,12 +1,19 @@
 import asyncio
 import websockets
-# create handler for each connection
+
 async def handler(websocket, path):
-    data = await websocket.recv()
-    reply = f"Data recieved as:{data}!"
-    await websocket.send(reply)
+    try:
+        data = await websocket.recv()
+        reply = f"Data received as: {data}!"
+        await websocket.send(reply)
+    except websockets.exceptions.ConnectionClosedError:
+        print("Client disconnected.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-start_server = websockets.serve(handler, "localhost", 8000)
+async def main():  # Wrap server start in a main function
+    async with websockets.serve(handler, "localhost", 8000): # use async with to ensure proper cleanup
+        await asyncio.Future()  # run forever
 
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+if __name__ == "__main__":
+    asyncio.run(main())
