@@ -21,7 +21,7 @@ async def handler(websocket):
             break
 
 async def main():
-    async with websockets.serve(handler, "0.0.0.0", 22): # Use 0.0.0.0 to listen on all interfaces
+    async with websockets.serve(handler, "192.168.1.235", 22): # Use 0.0.0.0 to listen on all interfaces
         await asyncio.Future()  # run forever
 
 if __name__ == "__main__":
